@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lettro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pixelify Sans', system-ui;
+            background-image: url("header.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #4b0082;
+            overflow: hidden;
+        }
+
+        #startPage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            color: thistle;
+            animation: fadeIn 3s ease-out;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .logo {
+            width: 300px;
+            height: 300px;
+            animation: logoAnimation 2s ease-out forwards;
+        }
+
+        .slogan {
+            font-size: 2rem;
+            color: rgb(190, 206, 224);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: sloganAnimation 2s ease-out 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes logoAnimation {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes sloganAnimation {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .title-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 45px;
+            background: #ffe3e3;
+            border-bottom: 2px dashed #ffbde1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 12px;
+            box-sizing: border-box;
+            z-index: 1000;
+            -webkit-app-region: drag;
+        }
+
+        .drag-region {
+            margin-left: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            color: #789dbc;
+            flex-grow: 1;
+        }
+
+        .window-controls {
+            margin-left: 160px;
+            flex-grow: 1;
+            display: flex;
+            -webkit-app-region: drag;
+        }
+
+        .window-controls button {
+            background: transparent;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            -webkit-app-region: no-drag;
+        }
+
+        .window-controls img {
+            width: 45px;
+            height: 45px;
+            filter: drop-shadow(1px 1px #ffc2d1);
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 130px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #94b7a7;
+            text-align: center;
+        }
+
+        .form-container form {
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .form-container form input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 3px dashed #e7cccc;
+            border-radius: 5px;
+            outline: none;
+            font-family: 'Pixelify Sans', system-ui;
+            color: thistle;
+        }
+
+        .form-container form button {
+            margin-top: -17px;
+            margin-bottom: -30px;
+            background-color: transparent;
+            outline: transparent;
+            border: transparent;
+            cursor: pointer;
+        }
+
+        .form-container form button img {
+            width: 100px;
+            height: 100px;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            flex-grow: 1;
+        }
+
+        .form-container input::placeholder {
+            color: thistle;
+        }
+
+        .form-container input::placeholder-shown {
+            color: thistle;
+        }
+
+        .form-container .switch-form a {
+            color: #a1c0eb;
+            text-decoration: none;
+        }
+
+        .form-container .switch-form a:hover {
+            text-decoration: underline;
+        }
+
+        .app-container {
+            display: none;
+            padding-bottom: 100px;
+            margin-left: 25px;
+            margin-right: 25px;
+            min-height: 100vh;
+            flex-grow: 1;
+            flex-direction: column;
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+            margin-top: -83px;
+            margin-left: 5px;
+            margin-right: 20px;
+        }
+
+        nav button:nth-child(2) {
+            padding-left: 18px;
+            flex-grow: 1;
+        }
+
+        nav button {
+            margin-top: -83px;
+            margin-right: 10px;
+            margin-left: 32px;
+            flex-grow: 1;
+            background: transparent;
+            padding: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-color: transparent;
+        }
+
+        #mail-area {
+            width: 300px;
+            height: 350px;
+            background: #fff8fc;
+            opacity: 0.8;
+            border: 5px dashed #ffbde1;
+            border-radius: 12px;
+            padding: 16px;
+            box-sizing: border-box;
+            margin: 20px;
+            margin-top: -50px;
+            margin-bottom: -60px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        #mail-area input[type='text'] {
+            font-family: 'Pixelify Sans', system-ui;
+            color: thistle;
+            border: 3px dashed #e7cccc;
+            outline: none;
+        }
+
+        #mail-area input[type='text']::placeholder {
+            color: thistle;
+        }
+
+        #mail-area textarea {
+            font-family: 'Pixelify Sans', system-ui;
+            color: thistle;
+            border: 3px dashed #e7cccc;
+            outline: none;
+        }
+
+        #mail-area textarea::placeholder {
+            color: thistle;
+        }
+
+        #mail-area h2 {
+            color: #d1e9f6;
+        }
+
+        p {
+            text-align: center;
+            color: #eecad5;
+        }
+
+        :placeholder-shown {
+            font-family: 'Pixelify Sans', system-ui;
+            color: thistle;
+        }
+
+        .send-btn {
+            background: none;
+            border: none;
+            outline: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .send-icon {
+            width: 100px;
+            height: 100px;
+            filter: drop-shadow(1px 1px #ffcce0);
+            transition: transform 0.2s ease;
+        }
+
+        footer button{
+            background: transparent;
+            border-color: transparent;
+            outline: transparent;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            padding-bottom: 30px;
+            cursor: pointer;
+        }
+
+        footer img {
+            width: 200px;
+            height: 200px;
+            flex-grow: 1;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div id="startPage">
+        <img src="logo.png" alt="Lettro Logo" class="logo" />
+        <div class="slogan">less clutter, more clarity.</div>
+    </div>
+
+    <div id="mainContent" class="hidden">
+        <div class="title-bar">
+            <div class="drag-region">Lettro</div>
+            <div class="window-controls">
+                <button class="min-btn" title="Minimize">
+                    <img src="icon-min.png" alt="Minimize">
+                </button>
+                <button class="close-btn" title="Close">
+                    <img src="icon-close.png" alt="Close">
+                </button>
+            </div>
+        </div>
+        <div class="form-container">
+            <div id="loginForm">
+                <h2>LOGIN</h2>
+                <form id="login-form">
+                    <input type="text" name="email" placeholder="username" required>
+                    <input type="password" name="password" placeholder="password" required>
+                    <button type="submit">
+                        <img src="login.png" alt="login">
+                    </button>
+                </form>
+                <div class="switch-form">
+                    <a href="#" id="showSignup">don't have an account? sign up</a>
+                </div>
+            </div>
+
+            <div id="signupForm" class="hidden">
+                <h2>SIGN UP</h2>
+                <form id="signup-form">
+                    <input type="text" name="name" placeholder="create your username" required>
+                    <input type="password" name="password" placeholder="create your password" required>
+                    <button type="submit">
+                        <img src="signup.png" alt="signup">
+                    </button>
+                </form>
+                <div class="switch-form">
+                    <a href="#" id="showLogin">already have an account? login</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-container">
+            <nav>
+                <button onclick="switchTab('inbox')">
+                    <img src="inbox.png" alt="Inbox" width="85" height="85">
+                </button>
+                <button onclick="switchTab('sent')">
+                    <img src="sent.png" alt="Sent" width="85" height="85">
+                </button>
+                <button onclick="switchTab('Trash')">
+                    <img src="trash.png" alt="Inbox" width="85" height="85">
+                </button>
+            </nav>
+            <main id="mail-area">
+                <p>select a folder to view messages</p>
+            </main>
+            <footer>
+                <button onclick="composeMessage()">
+                    <img src="compose.png" alt="Compose">
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <audio id="buttonClickSound" src="click.wav" preload="auto"></audio>
+    <audio id="switchSound" src="switch.wav" preload="auto"></audio>
+    <audio id="typingSound" src="typing.wav" preload="auto"></audio>
+    <audio id="navClickSound" src="click.wav" preload="auto"></audio>
+    <audio id="sendSound" src="send.wav" preload="auto"></audio>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const showSignupLink = document.getElementById('showSignup');
+        const showLoginLink = document.getElementById('showLogin');
+        const mainContent = document.getElementById('mainContent');
+        const appContainer = document.querySelector('.app-container');
+        const buttonClickSound = document.getElementById('buttonClickSound');
+        const switchSound = document.getElementById('switchSound');
+        const typingSound = document.getElementById('typingSound');
+        const navClickSound = document.getElementById('navClickSound');
+
+        function playSound(audioElement) {
+            if (audioElement) {
+                audioElement.currentTime = 0;
+                audioElement.play();
+            }
+        }
+
+        showSignupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            playSound(switchSound);
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            playSound(switchSound);
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const startPage = document.getElementById("startPage");
+
+            setTimeout(() => {
+                if (startPage && mainContent) {
+                    startPage.style.display = 'none';
+                    mainContent.classList.remove("hidden");
+                    loginForm.classList.remove('hidden');
+                    signupForm.classList.add('hidden');
+                    attachWindowControlListeners();
+                }
+            }, 5000);
+        });
+
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            playSound(buttonClickSound);
+            loginForm.classList.add('hidden'); 
+            appContainer.style.display = 'flex';
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            playSound(buttonClickSound);
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        });
+
+        const inputFields = document.querySelectorAll('input[type="text"], input[type="password"], textarea');
+        inputFields.forEach(input => {
+            input.addEventListener('keydown', () => {
+                playSound(typingSound);
+            });
+        });
+
+        function switchTab(tab) {
+            playSound(navClickSound);
+            const area = document.getElementById('mail-area');
+            area.innerHTML = `
+                <h2>${tab.toUpperCase()}</h2>
+                <p>no messages yet.</p>
+            `;
+        }
+
+        function composeMessage() {
+            playSound(navClickSound);
+            const area = document.getElementById('mail-area');
+            area.innerHTML = `
+                <h2>new message</h2>
+                <input type='text' id='toInput' placeholder='to...' style='width: 100%;'><br><br>
+                <textarea id='messageInput' placeholder='write your message...' style='width: 100%; height: 100px;'></textarea><br><br>
+                <button id='sendButton' class='send-btn'>
+                    <img src='sending.png' alt='Send' class='send-icon'>
+                </button>
+            `;
+
+            const toInput = document.getElementById('toInput');
+            const messageInput = document.getElementById('messageInput');
+            const sendSound = document.getElementById('sendSound');
+
+            if (toInput) {
+                toInput.addEventListener('keydown', () => playSound(typingSound));
+            }
+            if (messageInput) {
+                messageInput.addEventListener('keydown', () => playSound(typingSound));
+            }
+
+            if (sendButton) {
+                sendButton.addEventListener('click', () => {
+                playSound(sendSound);
+                alert("message sent!");
+                });
+            }
+        }
+
+        function attachWindowControlListeners() {
+            const minBtn = document.querySelector('.min-btn');
+            const closeBtn = document.querySelector('.close-btn');
+
+            if (minBtn && window.electronAPI) {
+                minBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Minimize clicked');
+                    window.electronAPI.minimizeWindow();
+                });
+            }
+
+            if (closeBtn && window.electronAPI) {
+                closeBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Close clicked');
+                    window.electronAPI.closeWindow();
+                });
+            }
+        }
+    </script>
+</body>
+</html>
